@@ -1,5 +1,5 @@
 """
-___init__.py for airsenal
+___init__.py for decipher
 """
 
 import os

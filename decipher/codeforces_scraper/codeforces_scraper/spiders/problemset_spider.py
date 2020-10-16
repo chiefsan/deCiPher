@@ -1,4 +1,5 @@
-from CodeforcesSpider.items import CodeforcesProblemItem
+import scrapy
+from ..items import CodeforcesProblemItem
 
 class CodeforcesProblemSpider(scrapy.Spider):
     name = "problemset_spider"
