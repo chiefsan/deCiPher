@@ -9,5 +9,17 @@ from itemadapter import ItemAdapter
 
 
 class CodeforcesScraperPipeline:
+    def __init__(self):
+        filename = os.path.join(
+            os.path.join(
+                os.path.dirname(__file__),
+                "..",
+                "..",
+                "data",
+                "problemset.json",
+            )
+        )
+        self.file = open(filename, 'wb')
+        
     def process_item(self, item, spider):
         return item
