@@ -31,6 +31,17 @@ class Problem(Base):
     sample_tests = Column(String, nullable=True)
     note = Column(String, nullable=True)
 
+class InvertedIndex(Base):
+    __tablename__= "inverted_index"
+    term_id = Column(Integer, primary_key=True)
+    posting_list = Column(String)
+
+class TermDictionary(Base):
+    __tablename__ = "term_dictionary"
+    term_id = Column(Integer, primary_key=True)
+    term = Column(String, nullable=False)
+
+
 engine = create_engine(DB_CONNECTION_STRING)
 
 Base.metadata.create_all(engine)
