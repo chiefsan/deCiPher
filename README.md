@@ -1,6 +1,6 @@
 # deCiPher
 
-_deCiPher_ is a package for deciphering machine learning problems.
+_deCiPher_ is a package for deciphering programming problems.
 
 ## Install
 
@@ -26,17 +26,7 @@ pip install .
 
 
 
-## Getting Started
 
-If you installed AIrsenal with conda, you should always make sure the `decipherenv` virtual environment is activated before running AIrsenal commands. To activate the environment use:
-
-```shell
-conda activate decipherenv
-```
-
-1. Creating the database
-
-Once the module has been installed and your team ID configured, run the following command to create the AIrsenal database:
 
 ## Getting Started
 
