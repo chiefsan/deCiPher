@@ -9,6 +9,7 @@ import importlib
 
 import json
 from sqlalchemy import desc
+from bs4 import BeautifulSoup
 
 from ..framework.schema import Problem, Base, engine
 
@@ -34,25 +35,47 @@ def fill_problem_table_from_file(filename, session):
         s = f.read()
         s = s[1:-1].replace('}\n', '}').replace('\n{', '{').replace(',{', '{')
 
-
+    example_problem = Problem()
+    data_members = [attr for attr in dir(example_problem) if not callable(
+        getattr(example_problem, attr)) and not attr.startswith("__")]
     k = 0
     while True:
         try:
             problem, remaining = grabJSON(s)
             p = Problem()
-            p.p_contest_id = str(problem['p_id'])
-            p.p_index = str(problem['p_index'])
-            p.p_problem_id = str(problem['p_id'])+str(problem['p_index'])
-            p.p_title = str(problem['p_title'])
-            p.p_time_limit = str(problem['p_time_limit'])
-            p.p_memory_limit = str(problem['p_memory_limit'])
-            p.p_input_file = str(problem['p_input_file'])
-            p.p_output_file = str(problem['p_output_file'])
-            p.p_statement = str(problem['p_statement'])
-            p.p_input_specification = str(problem['p_input_specification'])
-            p.p_output_specification = str(problem['p_output_specification'])
-            p.p_sample_tests = str(['p_sample_tests'])
-            p.p_note = str(problem['p_note'])
+            p.contest_id = str(problem['p_id'])
+            p.contest_id = BeautifulSoup(p.contest_id).get_text()
+            p.index = str(problem['p_index'])
+            p.index = BeautifulSoup(p.index).get_text()
+            p.problem_id = str(problem['p_id'])+str(problem['p_index'])
+            p.problem_id = BeautifulSoup(p.problem_id).get_text()
+            p.title = str(problem['p_title'])
+            p.title = BeautifulSoup(p.title).get_text()
+            p.title = p.title[p.title.index(' ')+1:]
+            p.time_limit = str(problem['p_time_limit'])
+            p.time_limit = BeautifulSoup(p.time_limit).get_text()
+            p.memory_limit = str(problem['p_memory_limit'])
+            p.memory_limit = BeautifulSoup(p.memory_limit).get_text()
+            p.input_file = str(problem['p_input_file'])
+            p.input_file = BeautifulSoup(p.input_file).get_text()
+            p.output_file = str(problem['p_output_file'])
+            p.output_file = BeautifulSoup(p.output_file).get_text()
+            p.statement = str(problem['p_statement'])
+            p.statement = BeautifulSoup(p.statement).get_text()
+            p.input_specification = str(problem['p_input_specification'])
+            p.input_specification = BeautifulSoup(p.input_specification).get_text()
+            p.input_specification = p.input_specification[5:]
+            p.output_specification = str(problem['p_output_specification'])
+            p.output_specification = BeautifulSoup(p.output_specification).get_text()
+            p.output_specification = p.output_specification[6:]
+            p.sample_tests = str(problem['p_sample_tests'])
+            p.sample_tests = BeautifulSoup(p.sample_tests).get_text()
+            p.sample_tests = ''.join(eval(p.sample_tests))
+            p.note = str(problem['p_note'])
+            p.note = BeautifulSoup(p.note).get_text()
+            p.note = eval(p.note)
+            p.note =  re.sub(' {2,}', ' ', ' '.join(p.note))
+            print(p.note )
             s = remaining
             session.add(p)
             k += 1
