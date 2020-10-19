@@ -30,10 +30,10 @@ pip install .
 
 ## Getting Started
 
-If you installed AIrsenal with conda, you should always make sure the `airsenalenv` virtual environment is activated before running AIrsenal commands. To activate the environment use:
+If you installed deCiPher with conda, you should always make sure the `decipherenv` virtual environment is activated before running deCiPher commands. To activate the environment use:
 
 ```shell
-conda activate airsenalenv
+conda activate decipherenv
 ```
 
 ### 1. Scraping the codeforces problemset
