@@ -30,7 +30,7 @@ def remove_db_session(dbsession=DBSESSION):
 
 def preprocess_problems(session=DBSESSION):
     for problem in session.query(Problem).all():
-        print (problem.problem_id)
+        # print (problem.problem_id)
         textual_matter = problem.statement + problem.note + problem.title
         textual_matter, indices = preprocess_text(textual_matter)
         for term in textual_matter:
@@ -39,8 +39,9 @@ def preprocess_problems(session=DBSESSION):
                 term_dict_element = TermDictionary()
                 term_dict_element.term = term
                 current_term_id = term_dict_element.term_id = next_id
+                print (current_term_id)
                 session.add(term_dict_element)
-                # session.commit()
+                session.commit()
             else:
                 current_term_id = session.query(TermDictionary).filter_by(term=term).all()[0].term_id
             query = session.query(InvertedIndex).filter_by(term_id=current_term_id).all()
@@ -48,8 +49,12 @@ def preprocess_problems(session=DBSESSION):
                 inverted_index_element = InvertedIndex()
                 inverted_index_element.term = term
                 inverted_index_element.posting_list = '[0]'
+                inverted_index_element.term_frequency = 0
                 session.add(inverted_index_element)
-                # session.commit()
+                session.commit()
+            term_frequency = int(session.query(InvertedIndex).filter_by(term_id=current_term_id).all()[0].term_frequency)
+            term_frequency += 1
+            session.execute('UPDATE inverted_index SET term_frequency = "'+ str(term_frequency) + '" WHERE term_id = ' + str(current_term_id))
             posting_list = eval(session.query(InvertedIndex).filter_by(term_id=current_term_id).all()[0].posting_list)
             if len(posting_list)>1 and posting_list[-1]==problem.problem_id:
                 continue

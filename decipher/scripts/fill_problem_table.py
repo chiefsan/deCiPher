@@ -55,7 +55,7 @@ def fill_problem_table_from_file(filename, session):
             p.time_limit = str(problem['p_time_limit'])
             p.time_limit = BeautifulSoup(p.time_limit, 'lxml').get_text()
             p.memory_limit = str(problem['p_memory_limit'])
-            p.memory_limit = BeautifulSoup(p.memory_limi, 'lxml't).get_text()
+            p.memory_limit = BeautifulSoup(p.memory_limit, 'lxml').get_text()
             p.input_file = str(problem['p_input_file'])
             p.input_file = BeautifulSoup(p.input_file, 'lxml').get_text()
             p.output_file = str(problem['p_output_file'])
@@ -75,7 +75,7 @@ def fill_problem_table_from_file(filename, session):
             p.note = BeautifulSoup(p.note, 'lxml').get_text()
             p.note = eval(p.note)
             p.note =  re.sub(' {2,}', ' ', ' '.join(p.note))
-            print(p.note )
+            # print(p.note )
             s = remaining
             session.add(p)
             k += 1
@@ -104,4 +104,4 @@ def make_problem_table(session):
 
 if __name__ == "__main__":
     with session_scope() as session:
-        make_player_table(session)
+        make_problem_table(session)

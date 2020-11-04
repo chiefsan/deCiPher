@@ -34,6 +34,7 @@ class Problem(Base):
 class InvertedIndex(Base):
     __tablename__= "inverted_index"
     term_id = Column(Integer, primary_key=True)
+    term_frequency = Column(Integer)
     posting_list = Column(String)
 
 class TermDictionary(Base):
