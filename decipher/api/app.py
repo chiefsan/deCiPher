@@ -32,7 +32,7 @@ def remove_session(ex=None):
 def welcome():
     return create_response("Welcome to the decipher search API!<br/>")
 
-@blueprint.route("/api/search/<query>", defaults={'max_num_results': 5})
+# @blueprint.route("/api/search/<query>", defaults={'max_num_results': 5})
 @blueprint.route("/api/search/<query>/<max_num_results>")
 def welcome():
     results = search(query, max_num_results)
