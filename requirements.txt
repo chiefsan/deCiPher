@@ -9,3 +9,4 @@ tabulate==0.8.7
 Flask==1.1.1
 simplejson==3.17.2
 beautifulsoup4==4.9.3
+gunicorn
