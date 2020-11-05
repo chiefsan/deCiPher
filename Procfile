@@ -1,1 +1,1 @@
-web: gunicorn decipher.api.app:create_app
+web: gunicorn decipher.api.app:create_app()
