@@ -22,9 +22,8 @@ def preprocess_text(content):
     return tokens_no_stopwords, token_indices_no_stopwords
 
 from ..framework.schema import engine, Problem, InvertedIndex, TermDictionary
-DBSESSION = scoped_session(sessionmaker(bind=engine))
 
-def preprocess_problems(session=DBSESSION):
+def preprocess_problems(session=scoped_session(sessionmaker(bind=engine))):
     for problem in session.query(Problem).all():
         print (problem.problem_id)
         textual_matter = problem.statement + problem.note + problem.title

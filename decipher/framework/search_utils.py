@@ -25,9 +25,7 @@ def preprocess_text(content):
     return tokens_no_stopwords, token_indices_no_stopwords
 
 
-DBSESSION = scoped_session(sessionmaker(bind=engine))
-
-def search(query, max_num_results, session=DBSESSION):
+def search(query, max_num_results, session=scoped_session(sessionmaker(bind=engine))):
     query,_ = preprocess_text(query)
     num_docs = int(list(session.execute('SELECT COUNT(*) from problem'))[0][0])
     scores = defaultdict(float)

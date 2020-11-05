@@ -5,13 +5,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Blueprint, Flask, session, request, jsonify
 from decipher.framework.schema import engine
 
-DBSESSION = scoped_session(sessionmaker(bind=engine))
-
-def remove_db_session(dbsession=DBSESSION):
+def remove_db_session(dbsession=scoped_session(sessionmaker(bind=engine))):
     dbsession.remove()
 
 
-def create_response(orig_response, dbsession=DBSESSION):
+def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=engine))):
     """
     Add headers to the response
     """
