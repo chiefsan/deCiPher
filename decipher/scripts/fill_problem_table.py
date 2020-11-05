@@ -75,6 +75,7 @@ def fill_problem_table_from_file(filename, session):
             p.note = BeautifulSoup(p.note, 'lxml').get_text()
             p.note = eval(p.note)
             p.note =  re.sub(' {2,}', ' ', ' '.join(p.note))
+            p.problem_length = 0
             # print(p.note )
             s = remaining
             session.add(p)

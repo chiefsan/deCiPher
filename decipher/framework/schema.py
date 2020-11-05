@@ -18,6 +18,7 @@ Base = declarative_base()
 class Problem(Base):
     __tablename__ = "problem"    
     problem_id = Column(String, primary_key=True, nullable=True)
+    problem_length = Column(Integer)
     contest_id = Column(String, nullable=True)
     index = Column(String, nullable=True)
     title = Column(String, nullable=True)

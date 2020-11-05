@@ -14,7 +14,7 @@ from collections import defaultdict
 def preprocess_text(content):
     content = content.lower()
     tokens = nltk.word_tokenize(content)
-    stopwords = nltk.corpus.stopwords.words('english')
+    stopwords = nltk.corpus.stopwords.words('english')+[',', '$']
     mask = list(map(lambda word: word not in stopwords, tokens))
     token_indices_no_stopwords = list(filter(lambda i: mask[i], range(len(tokens))))
     tokens_no_stopwords = [tokens[i] for i in token_indices_no_stopwords]
@@ -24,15 +24,12 @@ def preprocess_text(content):
 from ..framework.schema import engine, Problem, InvertedIndex, TermDictionary
 DBSESSION = scoped_session(sessionmaker(bind=engine))
 
-
-def remove_db_session(dbsession=DBSESSION):
-    dbsession.remove()
-
 def preprocess_problems(session=DBSESSION):
     for problem in session.query(Problem).all():
-        # print (problem.problem_id)
+        print (problem.problem_id)
         textual_matter = problem.statement + problem.note + problem.title
         textual_matter, indices = preprocess_text(textual_matter)
+        session.execute('UPDATE problem SET problem_length = "' + str(len(textual_matter)) + '" WHERE problem_id = ' + '"'+str(problem.problem_id) +'"')
         for term in textual_matter:
             if len(session.query(TermDictionary).filter_by(term=term).all())==0:
                 next_id = len(session.query(TermDictionary).all())
@@ -57,13 +54,12 @@ def preprocess_problems(session=DBSESSION):
             term_frequency += 1
             session.execute('UPDATE inverted_index SET term_frequency = "'+ str(term_frequency) + '" WHERE term_id = ' + str(current_term_id))
             posting_list = eval(session.query(InvertedIndex).filter_by(term_id=current_term_id).all()[0].posting_list)
+            if posting_list[problem.problem_id]==0:
+                document_frequency = int(session.query(InvertedIndex).filter_by(term_id=current_term_id).all()[0].document_frequency)
+                document_frequency += 1
+                session.execute('UPDATE inverted_index SET document_frequency = "'+ str(document_frequency) + '" WHERE term_id = ' + str(current_term_id))
+                session.commit()
             posting_list[problem.problem_id] += 1
             session.execute('UPDATE inverted_index SET posting_list = "' + str(posting_list).replace("<class 'int'>", "int") + '" WHERE term_id = ' + str(current_term_id))
-            session.commit()
-            if posting_list[problem.problem_id]!=0:
-                continue
-            document_frequency = int(session.query(InvertedIndex).filter_by(term_id=current_term_id).all()[0].document_frequency)
-            document_frequency += 1
-            session.execute('UPDATE inverted_index SET document_frequency = "'+ str(document_frequency) + '" WHERE term_id = ' + str(current_term_id))
             session.commit()
     session.commit()
