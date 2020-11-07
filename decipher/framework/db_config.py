@@ -11,6 +11,5 @@ from .. import TMPDIR
 DB_CONNECTION_STRING = "postgres://chiefsan:password@127.0.0.1:5432/decipher"
 
 ## location of sqlite file overridden by an env var
-if "deCiPherDBFile" in os.environ.keys():
-    DB_CONNECTION_STRING = "sqlite:///{}".format(
-        os.environ["deCiPherDBFile"])
+if 'DATABASE_URL' in os.environ.keys():
+    DB_CONNECTION_STRING = os.environ['DATABASE_URL']
