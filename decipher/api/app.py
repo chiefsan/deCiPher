@@ -34,8 +34,9 @@ def welcome():
 
 @blueprint.route("/api/search/<query>", defaults={'max_num_results': 5})
 @blueprint.route("/api/search/<query>/<max_num_results>")
-def search():
-    results = search(query, max_num_results)
+def api_search(query, max_num_results):
+    results = search(query, int(max_num_results))
+    return create_response(results)
     return create_response("Welcome to the decipher search API!<br/>")
 
 # @blueprint.route("/teams", methods=["GET"])
