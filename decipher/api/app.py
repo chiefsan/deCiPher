@@ -8,7 +8,6 @@ from decipher.framework.api_utils import remove_db_session, create_response
 from decipher.framework.search_utils import search
 from sqlalchemy.orm import scoped_session, sessionmaker
 from decipher.framework.schema import engine, Problem
-import jsons
 from sqlalchemy import inspect
 from flask import render_template
 
