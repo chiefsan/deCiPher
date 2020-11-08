@@ -7,6 +7,16 @@ from decipher.api.exceptions import ApiException
 from decipher.framework.api_utils import remove_db_session, create_response
 from decipher.framework.search_utils import search
 from sqlalchemy.orm import scoped_session, sessionmaker
+from decipher.framework.schema import engine, Problem
+import jsons
+from sqlalchemy import inspect
+from flask import render_template
+
+
+def object_as_dict(obj):
+    return {c.key: getattr(obj, c.key)
+            for c in inspect(obj).mapper.column_attrs}
+
 
 import json
 
@@ -30,14 +40,16 @@ def remove_session(ex=None):
 
 @blueprint.route("/")
 def welcome():
-    return create_response("Welcome to the decipher search API!<br/>")
+    return render_template('index.html')
 
 @blueprint.route("/api/search/<query>", defaults={'max_num_results': 5})
 @blueprint.route("/api/search/<query>/<max_num_results>")
-def api_search(query, max_num_results):
-    results = search(query, int(max_num_results))
-    return create_response(results)
-    return create_response("Welcome to the decipher search API!<br/>")
+def api_search(query, max_num_results, session=scoped_session(sessionmaker(bind=engine))):
+    result = search(query, int(max_num_results))
+    result_problems =  session.query(Problem).filter(Problem.problem_id.in_(tuple(result))).all()
+    result_problems = list(map(object_as_dict, result_problems))
+    # return create_response(result_problems)
+    return render_template('default.html', problems=result_problems)
 
 # @blueprint.route("/teams", methods=["GET"])
 # def get_team_list():
