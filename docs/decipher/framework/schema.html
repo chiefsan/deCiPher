@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>decipher.framework.schema API documentation</title>
+<meta name="description" content="Interface to the SQL database.
+Use SQLAlchemy to convert between DB tables and python objects." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cse.google.com/cse.js?cx=017837193012385208679:pey8ky8gdqw"></script>
+<style>.gsc-control-cse {padding:0 !important;margin-top:1em}</style>
+<style>.homelink{display:block;font-size:2em;font-weight:bold;color:#555;padding-bottom:.5em;border-bottom:1px solid silver}.homelink:hover{color:inherit}.homelink img{max-width:20%;max-height:5em;margin:auto;margin-bottom:.3em}</style>
+<link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg">
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>decipher.framework.schema</code></h1>
+</header>
+<section id="section-intro">
+<p>Interface to the SQL database.
+Use SQLAlchemy to convert between DB tables and python objects.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/schema.py#L0-L77" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Interface to the SQL database.
+Use SQLAlchemy to convert between DB tables and python objects.
+&#34;&#34;&#34;
+import os
+
+from sqlalchemy import Column, ForeignKey, Integer, String, Float
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, desc
+from contextlib import contextmanager
+
+from .db_config import DB_CONNECTION_STRING
+
+Base = declarative_base()
+
+
+class Problem(Base):
+    __tablename__ = &#34;problem&#34;
+
+    problem_id = Column(String, primary_key=True, nullable=True)
+    problem_length = Column(Integer)
+    contest_id = Column(String, nullable=True)
+    index = Column(String, nullable=True)
+    title = Column(String, nullable=True)
+    time_limit = Column(String, nullable=True)
+    memory_limit = Column(String, nullable=True)
+    input_file = Column(String, nullable=True)
+    output_file = Column(String, nullable=True)
+    statement = Column(String, nullable=True)
+    input_specification = Column(String, nullable=True)
+    output_specification = Column(String, nullable=True)
+    sample_tests = Column(String, nullable=True)
+    note = Column(String, nullable=True)
+
+
+class InvertedIndex(Base):
+    __tablename__ = &#34;inverted_index&#34;
+
+    term_id = Column(Integer, primary_key=True)
+    term_frequency = Column(Integer)
+    document_frequency = Column(Integer)
+    posting_list = Column(String)
+
+
+class TermDictionary(Base):
+    __tablename__ = &#34;term_dictionary&#34;
+
+    term_id = Column(Integer, primary_key=True)
+    term = Column(String, nullable=False)
+
+
+engine = create_engine(DB_CONNECTION_STRING)
+
+Base.metadata.create_all(engine)
+# Bind the engine to the metadata of the Base class so that the
+# declaratives can be accessed through a DBSession instance
+Base.metadata.bind = engine
+
+
+@contextmanager
+def session_scope():
+    &#34;&#34;&#34;
+    Provide a transactional scope around a series of operations.
+    &#34;&#34;&#34;
+
+    db_session = sessionmaker(bind=engine, autoflush=False)
+    session = db_session()
+
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="decipher.framework.schema.desc"><code class="name flex">
+<span>def <span class="ident">desc</span></span>(<span>column)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Produce a descending <code>ORDER BY</code> clause element.</p>
+<p>e.g.::</p>
+<pre><code>from sqlalchemy import desc
+
+stmt = select([users_table]).order_by(desc(users_table.c.name))
+</code></pre>
+<p>will produce SQL as::</p>
+<pre><code>SELECT id, name FROM user ORDER BY name DESC
+</code></pre>
+<p>The :func:<code>.<a title="decipher.framework.schema.desc" href="#decipher.framework.schema.desc">desc()</a></code> function is a standalone version of the
+:meth:<code>.ColumnElement.desc</code> method available on all SQL expressions,
+e.g.::</p>
+<pre><code>stmt = select([users_table]).order_by(users_table.c.name.desc())
+</code></pre>
+<p>:param column: A :class:<code>.ColumnElement</code> (e.g. scalar SQL expression)
+with which to apply the :func:<code>.<a title="decipher.framework.schema.desc" href="#decipher.framework.schema.desc">desc()</a></code> operation.</p>
+<div class="admonition seealso">
+<p class="admonition-title">Seealso</p>
+<p>:func:<code>.asc</code></p>
+<p>:func:<code>.nullsfirst</code></p>
+<p>:func:<code>.nullslast</code></p>
+<p>:meth:<code>.Select.order_by</code></p>
+</div></div>
+</dd>
+<dt id="decipher.framework.schema.session_scope"><code class="name flex">
+<span>def <span class="ident">session_scope</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Provide a transactional scope around a series of operations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/schema.py#L62-L78" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">@contextmanager
+def session_scope():
+    &#34;&#34;&#34;
+    Provide a transactional scope around a series of operations.
+    &#34;&#34;&#34;
+
+    db_session = sessionmaker(bind=engine, autoflush=False)
+    session = db_session()
+
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="decipher.framework.schema.InvertedIndex"><code class="flex name class">
+<span>class <span class="ident">InvertedIndex</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The most base type</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/schema.py#L38-L44" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">class InvertedIndex(Base):
+    __tablename__ = &#34;inverted_index&#34;
+
+    term_id = Column(Integer, primary_key=True)
+    term_frequency = Column(Integer)
+    document_frequency = Column(Integer)
+    posting_list = Column(String)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.ext.declarative.api.Base</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="decipher.framework.schema.InvertedIndex.document_frequency"><code class="name">var <span class="ident">document_frequency</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.InvertedIndex.posting_list"><code class="name">var <span class="ident">posting_list</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.InvertedIndex.term_frequency"><code class="name">var <span class="ident">term_frequency</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.InvertedIndex.term_id"><code class="name">var <span class="ident">term_id</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="decipher.framework.schema.Problem"><code class="flex name class">
+<span>class <span class="ident">Problem</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The most base type</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/schema.py#L19-L35" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">class Problem(Base):
+    __tablename__ = &#34;problem&#34;
+
+    problem_id = Column(String, primary_key=True, nullable=True)
+    problem_length = Column(Integer)
+    contest_id = Column(String, nullable=True)
+    index = Column(String, nullable=True)
+    title = Column(String, nullable=True)
+    time_limit = Column(String, nullable=True)
+    memory_limit = Column(String, nullable=True)
+    input_file = Column(String, nullable=True)
+    output_file = Column(String, nullable=True)
+    statement = Column(String, nullable=True)
+    input_specification = Column(String, nullable=True)
+    output_specification = Column(String, nullable=True)
+    sample_tests = Column(String, nullable=True)
+    note = Column(String, nullable=True)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.ext.declarative.api.Base</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="decipher.framework.schema.Problem.contest_id"><code class="name">var <span class="ident">contest_id</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.index"><code class="name">var <span class="ident">index</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.input_file"><code class="name">var <span class="ident">input_file</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.input_specification"><code class="name">var <span class="ident">input_specification</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.memory_limit"><code class="name">var <span class="ident">memory_limit</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.note"><code class="name">var <span class="ident">note</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.output_file"><code class="name">var <span class="ident">output_file</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.output_specification"><code class="name">var <span class="ident">output_specification</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.problem_id"><code class="name">var <span class="ident">problem_id</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.problem_length"><code class="name">var <span class="ident">problem_length</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.sample_tests"><code class="name">var <span class="ident">sample_tests</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.statement"><code class="name">var <span class="ident">statement</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.time_limit"><code class="name">var <span class="ident">time_limit</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.Problem.title"><code class="name">var <span class="ident">title</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="decipher.framework.schema.TermDictionary"><code class="flex name class">
+<span>class <span class="ident">TermDictionary</span></span>
+<span>(</span><span>**kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The most base type</p>
+<p>A simple constructor that allows initialization from kwargs.</p>
+<p>Sets attributes on the constructed instance using the names and
+values in <code>kwargs</code>.</p>
+<p>Only keys that are present as
+attributes of the instance's class are allowed. These could be,
+for example, any mapped columns or relationships.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/schema.py#L47-L51" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">class TermDictionary(Base):
+    __tablename__ = &#34;term_dictionary&#34;
+
+    term_id = Column(Integer, primary_key=True)
+    term = Column(String, nullable=False)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>sqlalchemy.ext.declarative.api.Base</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="decipher.framework.schema.TermDictionary.term"><code class="name">var <span class="ident">term</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+<dt id="decipher.framework.schema.TermDictionary.term_id"><code class="name">var <span class="ident">term_id</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/sqlalchemy/orm/attributes.py#L274-L282" class="git-link">Browse git</a>
+</summary>
+<pre><code class="python">def __get__(self, instance, owner):
+    if instance is None:
+        return self
+
+    dict_ = instance_dict(instance)
+    if self._supports_population and self.key in dict_:
+        return dict_[self.key]
+    else:
+        return self.impl.get(instance_state(instance), dict_)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<header>
+<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
+</a>
+</header>
+<div class="gcse-search" style="height: 70px"
+data-as_oq="site:chiefsan.github.io inurl:github.com/chiefsan/deCiPher"
+data-gaCategoryParameter="decipher.framework.schema">
+</div>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="decipher.framework" href="index.html">decipher.framework</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="decipher.framework.schema.desc" href="#decipher.framework.schema.desc">desc</a></code></li>
+<li><code><a title="decipher.framework.schema.session_scope" href="#decipher.framework.schema.session_scope">session_scope</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="decipher.framework.schema.InvertedIndex" href="#decipher.framework.schema.InvertedIndex">InvertedIndex</a></code></h4>
+<ul class="">
+<li><code><a title="decipher.framework.schema.InvertedIndex.document_frequency" href="#decipher.framework.schema.InvertedIndex.document_frequency">document_frequency</a></code></li>
+<li><code><a title="decipher.framework.schema.InvertedIndex.posting_list" href="#decipher.framework.schema.InvertedIndex.posting_list">posting_list</a></code></li>
+<li><code><a title="decipher.framework.schema.InvertedIndex.term_frequency" href="#decipher.framework.schema.InvertedIndex.term_frequency">term_frequency</a></code></li>
+<li><code><a title="decipher.framework.schema.InvertedIndex.term_id" href="#decipher.framework.schema.InvertedIndex.term_id">term_id</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="decipher.framework.schema.Problem" href="#decipher.framework.schema.Problem">Problem</a></code></h4>
+<ul class="">
+<li><code><a title="decipher.framework.schema.Problem.contest_id" href="#decipher.framework.schema.Problem.contest_id">contest_id</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.index" href="#decipher.framework.schema.Problem.index">index</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.input_file" href="#decipher.framework.schema.Problem.input_file">input_file</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.input_specification" href="#decipher.framework.schema.Problem.input_specification">input_specification</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.memory_limit" href="#decipher.framework.schema.Problem.memory_limit">memory_limit</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.note" href="#decipher.framework.schema.Problem.note">note</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.output_file" href="#decipher.framework.schema.Problem.output_file">output_file</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.output_specification" href="#decipher.framework.schema.Problem.output_specification">output_specification</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.problem_id" href="#decipher.framework.schema.Problem.problem_id">problem_id</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.problem_length" href="#decipher.framework.schema.Problem.problem_length">problem_length</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.sample_tests" href="#decipher.framework.schema.Problem.sample_tests">sample_tests</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.statement" href="#decipher.framework.schema.Problem.statement">statement</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.time_limit" href="#decipher.framework.schema.Problem.time_limit">time_limit</a></code></li>
+<li><code><a title="decipher.framework.schema.Problem.title" href="#decipher.framework.schema.Problem.title">title</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="decipher.framework.schema.TermDictionary" href="#decipher.framework.schema.TermDictionary">TermDictionary</a></code></h4>
+<ul class="">
+<li><code><a title="decipher.framework.schema.TermDictionary.term" href="#decipher.framework.schema.TermDictionary.term">term</a></code></li>
+<li><code><a title="decipher.framework.schema.TermDictionary.term_id" href="#decipher.framework.schema.TermDictionary.term_id">term_id</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
