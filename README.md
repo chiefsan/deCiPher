@@ -64,4 +64,4 @@ Create a database and set the environment variable `DATABASE_URL` to point to th
 
 ## Docs
 
-Read the docs on our Docs site.
+Read the docs on the Docs site.
