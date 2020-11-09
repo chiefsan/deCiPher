@@ -16,7 +16,7 @@ conda activate deCiPherenv
 pip install .
 ```
 
-#### Use deCiPher without conda
+**Use deCiPher without conda**
 
 ```shell
 git clone https://github.com/chiefsan/deCiPher.git
@@ -54,4 +54,14 @@ Once the problemset has been scrapped, run the following command to create the d
 decipher_setup_initial_db
 ```
 
+**SQLite**
+
 On Linux/Mac you should get a file `/tmp/data.db` containing the database. On Windows you should get a file `data.db` in the  temporary directory returned by the python [tempfile module](https://docs.python.org/3/library/tempfile.html) on your system.
+
+**PostgreSQL**
+
+Create a database and set the environment variable `DATABASE_URL` to point to the URL of the PostgreSQL database. Example: `postgres://chiefsan:password@127.0.0.1:5432/decipher`.
+
+## Docs
+
+Read the docs on our Docs site.
