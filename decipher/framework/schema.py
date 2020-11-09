@@ -15,8 +15,9 @@ from .db_config import DB_CONNECTION_STRING
 
 Base = declarative_base()
 
+
 class Problem(Base):
-    __tablename__ = "problem"    
+    __tablename__ = "problem"
     problem_id = Column(String, primary_key=True, nullable=True)
     problem_length = Column(Integer)
     contest_id = Column(String, nullable=True)
@@ -32,12 +33,14 @@ class Problem(Base):
     sample_tests = Column(String, nullable=True)
     note = Column(String, nullable=True)
 
+
 class InvertedIndex(Base):
-    __tablename__= "inverted_index"
+    __tablename__ = "inverted_index"
     term_id = Column(Integer, primary_key=True)
     term_frequency = Column(Integer)
     document_frequency = Column(Integer)
     posting_list = Column(String)
+
 
 class TermDictionary(Base):
     __tablename__ = "term_dictionary"
