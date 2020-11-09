@@ -7,8 +7,6 @@ import scrapy
 
 
 class CodeforcesProblemItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
     p_id = scrapy.Field()
     p_index = scrapy.Field()
     p_title = scrapy.Field()
@@ -21,6 +19,7 @@ class CodeforcesProblemItem(scrapy.Item):
     p_output_specification = scrapy.Field()
     p_sample_tests = scrapy.Field()
     p_note = scrapy.Field()
+
 
 class CodeforcesSolutionItem(scrapy.Item):
     s_pid = scrapy.Field()

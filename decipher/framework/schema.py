@@ -18,6 +18,7 @@ Base = declarative_base()
 
 class Problem(Base):
     __tablename__ = "problem"
+
     problem_id = Column(String, primary_key=True, nullable=True)
     problem_length = Column(Integer)
     contest_id = Column(String, nullable=True)
@@ -36,6 +37,7 @@ class Problem(Base):
 
 class InvertedIndex(Base):
     __tablename__ = "inverted_index"
+
     term_id = Column(Integer, primary_key=True)
     term_frequency = Column(Integer)
     document_frequency = Column(Integer)
@@ -44,6 +46,7 @@ class InvertedIndex(Base):
 
 class TermDictionary(Base):
     __tablename__ = "term_dictionary"
+
     term_id = Column(Integer, primary_key=True)
     term = Column(String, nullable=False)
 
@@ -58,9 +61,13 @@ Base.metadata.bind = engine
 
 @contextmanager
 def session_scope():
-    """Provide a transactional scope around a series of operations."""
+    """
+    Provide a transactional scope around a series of operations.
+    """
+
     db_session = sessionmaker(bind=engine, autoflush=False)
     session = db_session()
+
     try:
         yield session
         session.commit()

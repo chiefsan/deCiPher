@@ -1,5 +1,5 @@
 """
-Descriptive exception classes for the AIrsenal API
+Descriptive exception classes for the deCiPher API
 """
 
 

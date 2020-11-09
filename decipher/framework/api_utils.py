@@ -5,7 +5,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import Blueprint, Flask, session, request, jsonify
 from decipher.framework.schema import engine
 
+
 def remove_db_session(dbsession=scoped_session(sessionmaker(bind=engine))):
+    """
+    Removes given db session.
+    """
     dbsession.remove()
 
 
