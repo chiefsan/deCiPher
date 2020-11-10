@@ -65,7 +65,7 @@ def api_search(
 
 def create_app(name=__name__):
     """
-    Create Flask app.
+    Create a Flask app.
     """
     app = Flask(name)
     app.config["SESSION_TYPE"] = "filesystem"
