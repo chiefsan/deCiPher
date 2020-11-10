@@ -1,0 +1,7 @@
+plugins:
+  - jekyll-remote-theme
+
+remote_theme: chiefsan/minimal
+show_downloads: true
+
+baseurl: "" # the subpath of your site, e.g. /blog
