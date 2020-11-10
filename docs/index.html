@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>decipher.framework.db_config API documentation</title>
-<meta name="description" content="Database can be either an sqlite file or a postgres server" />
+<title>decipher API documentation</title>
+<meta name="description" content="_deCiPher_ is a package for deciphering programming problems …" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,34 +21,140 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>decipher.framework.db_config</code></h1>
+<h1 class="title">Package <code>decipher</code></h1>
 </header>
 <section id="section-intro">
-<p>Database can be either an sqlite file or a postgres server</p>
+<p><em>deCiPher</em> is a package for deciphering programming problems.</p>
+<h2 id="install">Install</h2>
+<p>It is recommended to run deCiPher in a conda environment. For instructions on how to install conda go to this link: <a href="https://docs.anaconda.com/anaconda/install/">https://docs.anaconda.com/anaconda/install/</a></p>
+<p>With conda installed, run these commands to create a new conda environment and download and install deCiPher:</p>
+<pre><code class="shell">git clone https://github.com/chiefsan/deCiPher.git
+cd deCiPher
+conda env create
+conda activate deCiPherenv
+pip install .
+</code></pre>
+<p><strong>Use deCiPher without conda</strong></p>
+<pre><code class="shell">git clone https://github.com/chiefsan/deCiPher.git
+cd deCiPher
+pip install .
+</code></pre>
+<h2 id="getting-started">Getting Started</h2>
+<p>If you installed deCiPher with conda, you should always make sure the <code>decipherenv</code> virtual environment is activated before running deCiPher commands. To activate the environment use:</p>
+<pre><code class="shell">conda activate decipherenv
+</code></pre>
+<h3 id="1-scraping-the-codeforces-problemset">1. Scraping the codeforces problemset</h3>
+<p>Once the package has been installed, run the following command to scrap the codeforces problemset:</p>
+<pre><code class="shell">decipher_scrap_codeforces_problemset
+</code></pre>
+<p>This will create a file <code>problemset.json</code> in the package installation path.</p>
+<h3 id="2-creating-the-database">2. Creating the database</h3>
+<p>Once the problemset has been scrapped, run the following command to create the database:</p>
+<pre><code class="shell">decipher_setup_initial_db
+</code></pre>
+<p><strong>SQLite</strong></p>
+<p>On Linux/Mac you should get a file <code>/tmp/data.db</code> containing the database. On Windows you should get a file <code>data.db</code> in the
+temporary directory returned by the python <a href="https://docs.python.org/3/library/tempfile.html">tempfile module</a> on your system.</p>
+<p><strong>PostgreSQL</strong></p>
+<p>Create a database and set the environment variable <code>DATABASE_URL</code> to point to the URL of the PostgreSQL database. Example: <code>postgres://chiefsan:password@127.0.0.1:5432/decipher</code>.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/db_config.py#L0-L15" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/__init__.py#L0-L70" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-Database can be either an sqlite file or a postgres server
+_deCiPher_ is a package for deciphering programming problems.
+
+## Install
+
+It is recommended to run deCiPher in a conda environment. For instructions on how to install conda go to this link: https://docs.anaconda.com/anaconda/install/
+
+With conda installed, run these commands to create a new conda environment and download and install deCiPher:
+
+```shell
+git clone https://github.com/chiefsan/deCiPher.git
+cd deCiPher
+conda env create
+conda activate deCiPherenv
+pip install .
+```
+
+**Use deCiPher without conda**
+
+```shell
+git clone https://github.com/chiefsan/deCiPher.git
+cd deCiPher
+pip install .
+```
+
+
+
+
+
+## Getting Started
+
+If you installed deCiPher with conda, you should always make sure the `decipherenv` virtual environment is activated before running deCiPher commands. To activate the environment use:
+
+```shell
+conda activate decipherenv
+```
+
+### 1. Scraping the codeforces problemset
+
+Once the package has been installed, run the following command to scrap the codeforces problemset:
+
+```shell
+decipher_scrap_codeforces_problemset
+```
+
+This will create a file `problemset.json` in the package installation path.
+
+### 2. Creating the database
+
+Once the problemset has been scrapped, run the following command to create the database:
+
+```shell
+decipher_setup_initial_db
+```
+
+**SQLite**
+
+On Linux/Mac you should get a file `/tmp/data.db` containing the database. On Windows you should get a file `data.db` in the  temporary directory returned by the python [tempfile module](https://docs.python.org/3/library/tempfile.html) on your system.
+
+**PostgreSQL**
+
+Create a database and set the environment variable `DATABASE_URL` to point to the URL of the PostgreSQL database. Example: `postgres://chiefsan:password@127.0.0.1:5432/decipher`.
 &#34;&#34;&#34;
 
 import os
-from .. import TMPDIR
+import tempfile
 
-# Default connection string points to a local sqlite file in
-# DB_CONNECTION_STRING = &#34;sqlite:///{}data.db&#34;.format(TMPDIR
-
-# Default connection string points to postgres database
-DB_CONNECTION_STRING = &#34;postgres://chiefsan:password@127.0.0.1:5432/decipher&#34;
-
-# location of database overridden by an env var (used by heroku)
-if &#34;DATABASE_URL&#34; in os.environ.keys():
-    DB_CONNECTION_STRING = os.environ[&#34;DATABASE_URL&#34;]</code></pre>
+if os.name == &#34;posix&#34;:
+    TMPDIR = &#34;/tmp/&#34;
+else:
+    TMPDIR = tempfile.gettempdir()</code></pre>
 </details>
 </section>
 <section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="decipher.api" href="api/index.html">decipher.api</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="decipher.codeforces_scraper" href="codeforces_scraper/index.html">decipher.codeforces_scraper</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="decipher.framework" href="framework/index.html">decipher.framework</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="decipher.scripts" href="scripts/index.html">decipher.scripts</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 </section>
 <section>
 </section>
@@ -59,22 +165,32 @@ if &#34;DATABASE_URL&#34; in os.environ.keys():
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>
 <div class="gcse-search" style="height: 70px"
 data-as_oq="site:chiefsan.github.io inurl:github.com/chiefsan/deCiPher"
-data-gaCategoryParameter="decipher.framework.db_config">
+data-gaCategoryParameter="decipher">
 </div>
 <h1>Index</h1>
 <div class="toc">
-<ul></ul>
+<ul>
+<li><a href="#install">Install</a></li>
+<li><a href="#getting-started">Getting Started</a><ul>
+<li><a href="#1-scraping-the-codeforces-problemset">1. Scraping the codeforces problemset</a></li>
+<li><a href="#2-creating-the-database">2. Creating the database</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <ul id="index">
-<li><h3>Super-module</h3>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="decipher.framework" href="index.html">decipher.framework</a></code></li>
+<li><code><a title="decipher.api" href="api/index.html">decipher.api</a></code></li>
+<li><code><a title="decipher.codeforces_scraper" href="codeforces_scraper/index.html">decipher.codeforces_scraper</a></code></li>
+<li><code><a title="decipher.framework" href="framework/index.html">decipher.framework</a></code></li>
+<li><code><a title="decipher.scripts" href="scripts/index.html">decipher.scripts</a></code></li>
 </ul>
 </li>
 </ul>

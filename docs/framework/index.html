@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>decipher.codeforces_scraper.codeforces_scraper API documentation</title>
+<title>decipher.framework API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -21,32 +21,33 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>decipher.codeforces_scraper.codeforces_scraper</code></h1>
+<h1 class="title">Module <code>decipher.framework</code></h1>
 </header>
 <section id="section-intro">
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="decipher.codeforces_scraper.codeforces_scraper.items" href="items.html">decipher.codeforces_scraper.codeforces_scraper.items</a></code></dt>
+<dt><code class="name"><a title="decipher.framework.api_utils" href="api_utils.html">decipher.framework.api_utils</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="decipher.codeforces_scraper.codeforces_scraper.middlewares" href="middlewares.html">decipher.codeforces_scraper.codeforces_scraper.middlewares</a></code></dt>
+<dt><code class="name"><a title="decipher.framework.db_config" href="db_config.html">decipher.framework.db_config</a></code></dt>
+<dd>
+<div class="desc"><p>Database can be either an sqlite file or a postgres server</p></div>
+</dd>
+<dt><code class="name"><a title="decipher.framework.indexer" href="indexer.html">decipher.framework.indexer</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
-<dt><code class="name"><a title="decipher.codeforces_scraper.codeforces_scraper.pipelines" href="pipelines.html">decipher.codeforces_scraper.codeforces_scraper.pipelines</a></code></dt>
+<dt><code class="name"><a title="decipher.framework.schema" href="schema.html">decipher.framework.schema</a></code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Interface to the SQL database.
+Use SQLAlchemy to convert between DB tables and python objects.</p></div>
 </dd>
-<dt><code class="name"><a title="decipher.codeforces_scraper.codeforces_scraper.settings" href="settings.html">decipher.codeforces_scraper.codeforces_scraper.settings</a></code></dt>
+<dt><code class="name"><a title="decipher.framework.search_utils" href="search_utils.html">decipher.framework.search_utils</a></code></dt>
 <dd>
-<div class="desc"></div>
-</dd>
-<dt><code class="name"><a title="decipher.codeforces_scraper.codeforces_scraper.spiders" href="spiders/index.html">decipher.codeforces_scraper.codeforces_scraper.spiders</a></code></dt>
-<dd>
-<div class="desc"></div>
+<div class="desc"><p>Functions used by deCiPher search</p></div>
 </dd>
 </dl>
 </section>
@@ -59,13 +60,13 @@
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>
 <div class="gcse-search" style="height: 70px"
 data-as_oq="site:chiefsan.github.io inurl:github.com/chiefsan/deCiPher"
-data-gaCategoryParameter="decipher.codeforces_scraper.codeforces_scraper">
+data-gaCategoryParameter="decipher.framework">
 </div>
 <h1>Index</h1>
 <div class="toc">
@@ -74,16 +75,16 @@ data-gaCategoryParameter="decipher.codeforces_scraper.codeforces_scraper">
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="decipher.codeforces_scraper" href="../index.html">decipher.codeforces_scraper</a></code></li>
+<li><code><a title="decipher" href="../index.html">decipher</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="decipher.codeforces_scraper.codeforces_scraper.items" href="items.html">decipher.codeforces_scraper.codeforces_scraper.items</a></code></li>
-<li><code><a title="decipher.codeforces_scraper.codeforces_scraper.middlewares" href="middlewares.html">decipher.codeforces_scraper.codeforces_scraper.middlewares</a></code></li>
-<li><code><a title="decipher.codeforces_scraper.codeforces_scraper.pipelines" href="pipelines.html">decipher.codeforces_scraper.codeforces_scraper.pipelines</a></code></li>
-<li><code><a title="decipher.codeforces_scraper.codeforces_scraper.settings" href="settings.html">decipher.codeforces_scraper.codeforces_scraper.settings</a></code></li>
-<li><code><a title="decipher.codeforces_scraper.codeforces_scraper.spiders" href="spiders/index.html">decipher.codeforces_scraper.codeforces_scraper.spiders</a></code></li>
+<li><code><a title="decipher.framework.api_utils" href="api_utils.html">decipher.framework.api_utils</a></code></li>
+<li><code><a title="decipher.framework.db_config" href="db_config.html">decipher.framework.db_config</a></code></li>
+<li><code><a title="decipher.framework.indexer" href="indexer.html">decipher.framework.indexer</a></code></li>
+<li><code><a title="decipher.framework.schema" href="schema.html">decipher.framework.schema</a></code></li>
+<li><code><a title="decipher.framework.search_utils" href="search_utils.html">decipher.framework.search_utils</a></code></li>
 </ul>
 </li>
 </ul>

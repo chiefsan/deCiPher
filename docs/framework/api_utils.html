@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>decipher.api.exceptions API documentation</title>
-<meta name="description" content="Descriptive exception classes for the deCiPher API" />
+<title>decipher.framework.api_utils API documentation</title>
+<meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,35 +21,39 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>decipher.api.exceptions</code></h1>
+<h1 class="title">Module <code>decipher.framework.api_utils</code></h1>
 </header>
 <section id="section-intro">
-<p>Descriptive exception classes for the deCiPher API</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/exceptions.py#L0-L19" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/framework/api_utils.py#L0-L24" class="git-link">Browse git</a>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;
-Descriptive exception classes for the deCiPher API
-&#34;&#34;&#34;
+<pre><code class="python">from uuid import uuid4
+
+from pandas import DataFrame
+from sqlalchemy.orm import scoped_session, sessionmaker
+from flask import Blueprint, Flask, session, request, jsonify
+from decipher.framework.schema import engine
 
 
-class ApiException(Exception):
-    status_code = 500
+def remove_db_session(dbsession=scoped_session(sessionmaker(bind=engine))):
+    &#34;&#34;&#34;
+    Removes given db session.
+    &#34;&#34;&#34;
+    dbsession.remove()
 
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
 
-    def to_dict(self):
-        rv = dict(self.payload or ())
-        rv[&#34;status&#34;] = &#34;error&#34;
-        rv[&#34;error&#34;] = self.message
-        return rv</code></pre>
+def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=engine))):
+    &#34;&#34;&#34;
+    Add headers to the response
+    &#34;&#34;&#34;
+    response = jsonify(orig_response)
+    response.headers.add(
+        &#34;Access-Control-Allow-Headers&#34;,
+        &#34;Origin, X-Requested-With, Content-Type, Accept, x-auth&#34;,
+    )
+    return response</code></pre>
 </details>
 </section>
 <section>
@@ -57,82 +61,61 @@ class ApiException(Exception):
 <section>
 </section>
 <section>
-</section>
-<section>
-<h2 class="section-title" id="header-classes">Classes</h2>
+<h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="decipher.api.exceptions.ApiException"><code class="flex name class">
-<span>class <span class="ident">ApiException</span></span>
-<span>(</span><span>message, status_code=None, payload=None)</span>
+<dt id="decipher.framework.api_utils.create_response"><code class="name flex">
+<span>def <span class="ident">create_response</span></span>(<span>orig_response, dbsession=&lt;sqlalchemy.orm.scoping.scoped_session object&gt;)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+<div class="desc"><p>Add headers to the response</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/exceptions.py#L6-L20" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/framework/api_utils.py#L16-L25" class="git-link">Browse git</a>
 </summary>
-<pre><code class="python">class ApiException(Exception):
-    status_code = 500
-
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
-
-    def to_dict(self):
-        rv = dict(self.payload or ())
-        rv[&#34;status&#34;] = &#34;error&#34;
-        rv[&#34;error&#34;] = self.message
-        return rv</code></pre>
+<pre><code class="python">def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=engine))):
+    &#34;&#34;&#34;
+    Add headers to the response
+    &#34;&#34;&#34;
+    response = jsonify(orig_response)
+    response.headers.add(
+        &#34;Access-Control-Allow-Headers&#34;,
+        &#34;Origin, X-Requested-With, Content-Type, Accept, x-auth&#34;,
+    )
+    return response</code></pre>
 </details>
-<h3>Ancestors</h3>
-<ul class="hlist">
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
-<h3>Class variables</h3>
-<dl>
-<dt id="decipher.api.exceptions.ApiException.status_code"><code class="name">var <span class="ident">status_code</span></code></dt>
-<dd>
-<div class="desc"></div>
 </dd>
-</dl>
-<h3>Methods</h3>
-<dl>
-<dt id="decipher.api.exceptions.ApiException.to_dict"><code class="name flex">
-<span>def <span class="ident">to_dict</span></span>(<span>self)</span>
+<dt id="decipher.framework.api_utils.remove_db_session"><code class="name flex">
+<span>def <span class="ident">remove_db_session</span></span>(<span>dbsession=&lt;sqlalchemy.orm.scoping.scoped_session object&gt;)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Removes given db session.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/exceptions.py#L16-L20" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/framework/api_utils.py#L9-L13" class="git-link">Browse git</a>
 </summary>
-<pre><code class="python">def to_dict(self):
-    rv = dict(self.payload or ())
-    rv[&#34;status&#34;] = &#34;error&#34;
-    rv[&#34;error&#34;] = self.message
-    return rv</code></pre>
+<pre><code class="python">def remove_db_session(dbsession=scoped_session(sessionmaker(bind=engine))):
+    &#34;&#34;&#34;
+    Removes given db session.
+    &#34;&#34;&#34;
+    dbsession.remove()</code></pre>
 </details>
 </dd>
 </dl>
-</dd>
-</dl>
+</section>
+<section>
 </section>
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>
 <div class="gcse-search" style="height: 70px"
 data-as_oq="site:chiefsan.github.io inurl:github.com/chiefsan/deCiPher"
-data-gaCategoryParameter="decipher.api.exceptions">
+data-gaCategoryParameter="decipher.framework.api_utils">
 </div>
 <h1>Index</h1>
 <div class="toc">
@@ -141,18 +124,13 @@ data-gaCategoryParameter="decipher.api.exceptions">
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="decipher.api" href="index.html">decipher.api</a></code></li>
+<li><code><a title="decipher.framework" href="index.html">decipher.framework</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-classes">Classes</a></h3>
-<ul>
-<li>
-<h4><code><a title="decipher.api.exceptions.ApiException" href="#decipher.api.exceptions.ApiException">ApiException</a></code></h4>
+<li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="decipher.api.exceptions.ApiException.status_code" href="#decipher.api.exceptions.ApiException.status_code">status_code</a></code></li>
-<li><code><a title="decipher.api.exceptions.ApiException.to_dict" href="#decipher.api.exceptions.ApiException.to_dict">to_dict</a></code></li>
-</ul>
-</li>
+<li><code><a title="decipher.framework.api_utils.create_response" href="#decipher.framework.api_utils.create_response">create_response</a></code></li>
+<li><code><a title="decipher.framework.api_utils.remove_db_session" href="#decipher.framework.api_utils.remove_db_session">remove_db_session</a></code></li>
 </ul>
 </li>
 </ul>

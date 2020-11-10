@@ -27,7 +27,7 @@
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L0-L80" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L0-L80" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">from uuid import uuid4
 
@@ -96,7 +96,7 @@ def api_search(
 
 def create_app(name=__name__):
     &#34;&#34;&#34;
-    Create Flask app.
+    Create a Flask app.
     &#34;&#34;&#34;
     app = Flask(name)
     app.config[&#34;SESSION_TYPE&#34;] = &#34;filesystem&#34;
@@ -127,7 +127,7 @@ if __name__ == &#34;__main__&#34;:
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L50-L63" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L50-L63" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">@blueprint.route(&#34;/api/search/&lt;query&gt;&#34;, defaults={&#34;max_num_results&#34;: 5})
 @blueprint.route(&#34;/api/search/&lt;query&gt;/&lt;max_num_results&gt;&#34;)
@@ -149,15 +149,15 @@ def api_search(
 <span>def <span class="ident">create_app</span></span>(<span>name='decipher.api.app')</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create Flask app.</p></div>
+<div class="desc"><p>Create a Flask app.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L66-L76" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L66-L76" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">def create_app(name=__name__):
     &#34;&#34;&#34;
-    Create Flask app.
+    Create a Flask app.
     &#34;&#34;&#34;
     app = Flask(name)
     app.config[&#34;SESSION_TYPE&#34;] = &#34;filesystem&#34;
@@ -176,7 +176,7 @@ def api_search(
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L27-L31" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L27-L31" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">@blueprint.errorhandler(ApiException)
 def handle_exception(error):
@@ -193,7 +193,7 @@ def handle_exception(error):
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L15-L16" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L15-L16" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">def object_as_dict(obj):
     return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}</code></pre>
@@ -207,7 +207,7 @@ def handle_exception(error):
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L34-L39" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L34-L39" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">@blueprint.teardown_request
 def remove_session(ex=None):
@@ -225,7 +225,7 @@ def remove_session(ex=None):
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/api/app.py#L42-L47" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/api/app.py#L42-L47" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">@blueprint.route(&#34;/&#34;)
 def welcome():
@@ -242,7 +242,7 @@ def welcome():
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>

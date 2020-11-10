@@ -64,4 +64,4 @@ Create a database and set the environment variable `DATABASE_URL` to point to th
 
 ## Docs
 
-Read the docs on the Docs site.
+The docs can be found [here](https://chiefsan.github.io/deCiPher/docs).

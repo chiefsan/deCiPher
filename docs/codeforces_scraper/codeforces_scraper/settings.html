@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>decipher.scripts.scrap_codeforces_problemset API documentation</title>
-<meta name="description" content="Script to scrap the codeforces problemset." />
+<title>decipher.codeforces_scraper.codeforces_scraper.settings API documentation</title>
+<meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,44 +21,102 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>decipher.scripts.scrap_codeforces_problemset</code></h1>
+<h1 class="title">Module <code>decipher.codeforces_scraper.codeforces_scraper.settings</code></h1>
 </header>
 <section id="section-intro">
-<p>Script to scrap the codeforces problemset.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/scripts/scrap_codeforces_problemset.py#L0-L28" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/codeforces_scraper/codeforces_scraper/settings.py#L0-L87" class="git-link">Browse git</a>
 </summary>
-<pre><code class="python">&#34;&#34;&#34;Script to scrap the codeforces problemset.&#34;&#34;&#34;
-from .fill_problem_table import make_problem_table
+<pre><code class="python"># Scrapy settings for codeforces_scraper project
+#
+# For simplicity, this file contains only settings considered important or
+# commonly used. You can find more settings consulting the documentation:
+#
+#     https://docs.scrapy.org/en/latest/topics/settings.html
+#     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from ..framework.schema import session_scope
+BOT_NAME = &#34;codeforces_scraper&#34;
 
-from scrapy.crawler import CrawlerProcess
+SPIDER_MODULES = [&#34;codeforces_scraper.spiders&#34;]
+NEWSPIDER_MODULE = &#34;codeforces_scraper.spiders&#34;
 
-import os
-import sys
-import importlib
 
-from ..codeforces_scraper.codeforces_scraper.spiders.problemset_spider import CodeforcesProblemSpider
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+# USER_AGENT = &#39;codeforces_scraper (+http://www.yourdomain.com)&#39;
 
-def main():
-    # process = CrawlerProcess()
-    # process.crawl(CodeforcesProblemSpider)
-    # process.start()
+# Obey robots.txt rules
+# ROBOTSTXT_OBEY = True
 
-    scraper_dirname = os.path.join(
-            os.path.dirname(importlib.util.find_spec(&#39;decipher&#39;).origin),
-            &#34;codeforces_scraper&#34;,
-        )
-    os.chdir(scraper_dirname)
-    print(os.getcwd())
-    if not os.path.exists(&#39;../data&#39;):
-        os.makedirs(&#39;../data&#39;)
-    os.system(&#34;scrapy crawl problemset_spider -o ../data/problemset.json&#34;)
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+# CONCURRENT_REQUESTS = 32
 
-    print(&#34;DONE!&#34;)</code></pre>
+# Configure a delay for requests for the same website (default: 0)
+# See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
+# See also autothrottle settings and docs
+# DOWNLOAD_DELAY = 3
+# The download delay setting will honor only one of:
+# CONCURRENT_REQUESTS_PER_DOMAIN = 16
+# CONCURRENT_REQUESTS_PER_IP = 16
+
+# Disable cookies (enabled by default)
+# COOKIES_ENABLED = False
+
+# Disable Telnet Console (enabled by default)
+# TELNETCONSOLE_ENABLED = False
+
+# Override the default request headers:
+# DEFAULT_REQUEST_HEADERS = {
+#   &#39;Accept&#39;: &#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;,
+#   &#39;Accept-Language&#39;: &#39;en&#39;,
+# }
+
+# Enable or disable spider middlewares
+# See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+# SPIDER_MIDDLEWARES = {
+#    &#39;codeforces_scraper.middlewares.CodeforcesScraperSpiderMiddleware&#39;: 543,
+# }
+
+# Enable or disable downloader middlewares
+# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
+# DOWNLOADER_MIDDLEWARES = {
+#    &#39;codeforces_scraper.middlewares.CodeforcesScraperDownloaderMiddleware&#39;: 543,
+# }
+
+# Enable or disable extensions
+# See https://docs.scrapy.org/en/latest/topics/extensions.html
+# EXTENSIONS = {
+#    &#39;scrapy.extensions.telnet.TelnetConsole&#39;: None,
+# }
+
+# Configure item pipelines
+# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+# ITEM_PIPELINES = {
+#    &#39;codeforces_scraper.pipelines.CodeforcesScraperPipeline&#39;: 300,
+# }
+
+# Enable and configure the AutoThrottle extension (disabled by default)
+# See https://docs.scrapy.org/en/latest/topics/autothrottle.html
+# AUTOTHROTTLE_ENABLED = True
+# The initial download delay
+# AUTOTHROTTLE_START_DELAY = 5
+# The maximum download delay to be set in case of high latencies
+# AUTOTHROTTLE_MAX_DELAY = 60
+# The average number of requests Scrapy should be sending in parallel to
+# each remote server
+# AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+# Enable showing throttling stats for every response received:
+# AUTOTHROTTLE_DEBUG = False
+
+# Enable and configure HTTP caching (disabled by default)
+# See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+# HTTPCACHE_ENABLED = True
+# HTTPCACHE_EXPIRATION_SECS = 0
+# HTTPCACHE_DIR = &#39;httpcache&#39;
+# HTTPCACHE_IGNORE_HTTP_CODES = []
+# HTTPCACHE_STORAGE = &#39;scrapy.extensions.httpcache.FilesystemCacheStorage&#39;</code></pre>
 </details>
 </section>
 <section>
@@ -66,50 +124,19 @@ def main():
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
-<dl>
-<dt id="decipher.scripts.scrap_codeforces_problemset.main"><code class="name flex">
-<span>def <span class="ident">main</span></span>(<span>)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/scripts/scrap_codeforces_problemset.py#L14-L29" class="git-link">Browse git</a>
-</summary>
-<pre><code class="python">def main():
-    # process = CrawlerProcess()
-    # process.crawl(CodeforcesProblemSpider)
-    # process.start()
-
-    scraper_dirname = os.path.join(
-            os.path.dirname(importlib.util.find_spec(&#39;decipher&#39;).origin),
-            &#34;codeforces_scraper&#34;,
-        )
-    os.chdir(scraper_dirname)
-    print(os.getcwd())
-    if not os.path.exists(&#39;../data&#39;):
-        os.makedirs(&#39;../data&#39;)
-    os.system(&#34;scrapy crawl problemset_spider -o ../data/problemset.json&#34;)
-
-    print(&#34;DONE!&#34;)</code></pre>
-</details>
-</dd>
-</dl>
 </section>
 <section>
 </section>
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>
 <div class="gcse-search" style="height: 70px"
 data-as_oq="site:chiefsan.github.io inurl:github.com/chiefsan/deCiPher"
-data-gaCategoryParameter="decipher.scripts.scrap_codeforces_problemset">
+data-gaCategoryParameter="decipher.codeforces_scraper.codeforces_scraper.settings">
 </div>
 <h1>Index</h1>
 <div class="toc">
@@ -118,12 +145,7 @@ data-gaCategoryParameter="decipher.scripts.scrap_codeforces_problemset">
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="decipher.scripts" href="index.html">decipher.scripts</a></code></li>
-</ul>
-</li>
-<li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="decipher.scripts.scrap_codeforces_problemset.main" href="#decipher.scripts.scrap_codeforces_problemset.main">main</a></code></li>
+<li><code><a title="decipher.codeforces_scraper.codeforces_scraper" href="index.html">decipher.codeforces_scraper.codeforces_scraper</a></code></li>
 </ul>
 </li>
 </ul>

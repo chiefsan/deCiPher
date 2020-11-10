@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>decipher.framework.api_utils API documentation</title>
-<meta name="description" content="" />
+<title>decipher.scripts.scrap_codeforces_problemset API documentation</title>
+<meta name="description" content="Script to scrap the codeforces problemset." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,39 +21,44 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>decipher.framework.api_utils</code></h1>
+<h1 class="title">Module <code>decipher.scripts.scrap_codeforces_problemset</code></h1>
 </header>
 <section id="section-intro">
+<p>Script to scrap the codeforces problemset.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/api_utils.py#L0-L24" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/scripts/scrap_codeforces_problemset.py#L0-L28" class="git-link">Browse git</a>
 </summary>
-<pre><code class="python">from uuid import uuid4
+<pre><code class="python">&#34;&#34;&#34;Script to scrap the codeforces problemset.&#34;&#34;&#34;
+from .fill_problem_table import make_problem_table
 
-from pandas import DataFrame
-from sqlalchemy.orm import scoped_session, sessionmaker
-from flask import Blueprint, Flask, session, request, jsonify
-from decipher.framework.schema import engine
+from ..framework.schema import session_scope
 
+from scrapy.crawler import CrawlerProcess
 
-def remove_db_session(dbsession=scoped_session(sessionmaker(bind=engine))):
-    &#34;&#34;&#34;
-    Removes given db session.
-    &#34;&#34;&#34;
-    dbsession.remove()
+import os
+import sys
+import importlib
 
+from ..codeforces_scraper.codeforces_scraper.spiders.problemset_spider import CodeforcesProblemSpider
 
-def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=engine))):
-    &#34;&#34;&#34;
-    Add headers to the response
-    &#34;&#34;&#34;
-    response = jsonify(orig_response)
-    response.headers.add(
-        &#34;Access-Control-Allow-Headers&#34;,
-        &#34;Origin, X-Requested-With, Content-Type, Accept, x-auth&#34;,
-    )
-    return response</code></pre>
+def main():
+    # process = CrawlerProcess()
+    # process.crawl(CodeforcesProblemSpider)
+    # process.start()
+
+    scraper_dirname = os.path.join(
+            os.path.dirname(importlib.util.find_spec(&#39;decipher&#39;).origin),
+            &#34;codeforces_scraper&#34;,
+        )
+    os.chdir(scraper_dirname)
+    print(os.getcwd())
+    if not os.path.exists(&#39;../data&#39;):
+        os.makedirs(&#39;../data&#39;)
+    os.system(&#34;scrapy crawl problemset_spider -o ../data/problemset.json&#34;)
+
+    print(&#34;DONE!&#34;)</code></pre>
 </details>
 </section>
 <section>
@@ -63,43 +68,32 @@ def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=en
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="decipher.framework.api_utils.create_response"><code class="name flex">
-<span>def <span class="ident">create_response</span></span>(<span>orig_response, dbsession=&lt;sqlalchemy.orm.scoping.scoped_session object&gt;)</span>
+<dt id="decipher.scripts.scrap_codeforces_problemset.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Add headers to the response</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/api_utils.py#L16-L25" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/scripts/scrap_codeforces_problemset.py#L14-L29" class="git-link">Browse git</a>
 </summary>
-<pre><code class="python">def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=engine))):
-    &#34;&#34;&#34;
-    Add headers to the response
-    &#34;&#34;&#34;
-    response = jsonify(orig_response)
-    response.headers.add(
-        &#34;Access-Control-Allow-Headers&#34;,
-        &#34;Origin, X-Requested-With, Content-Type, Accept, x-auth&#34;,
-    )
-    return response</code></pre>
-</details>
-</dd>
-<dt id="decipher.framework.api_utils.remove_db_session"><code class="name flex">
-<span>def <span class="ident">remove_db_session</span></span>(<span>dbsession=&lt;sqlalchemy.orm.scoping.scoped_session object&gt;)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Removes given db session.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/framework/api_utils.py#L9-L13" class="git-link">Browse git</a>
-</summary>
-<pre><code class="python">def remove_db_session(dbsession=scoped_session(sessionmaker(bind=engine))):
-    &#34;&#34;&#34;
-    Removes given db session.
-    &#34;&#34;&#34;
-    dbsession.remove()</code></pre>
+<pre><code class="python">def main():
+    # process = CrawlerProcess()
+    # process.crawl(CodeforcesProblemSpider)
+    # process.start()
+
+    scraper_dirname = os.path.join(
+            os.path.dirname(importlib.util.find_spec(&#39;decipher&#39;).origin),
+            &#34;codeforces_scraper&#34;,
+        )
+    os.chdir(scraper_dirname)
+    print(os.getcwd())
+    if not os.path.exists(&#39;../data&#39;):
+        os.makedirs(&#39;../data&#39;)
+    os.system(&#34;scrapy crawl problemset_spider -o ../data/problemset.json&#34;)
+
+    print(&#34;DONE!&#34;)</code></pre>
 </details>
 </dd>
 </dl>
@@ -109,13 +103,13 @@ def create_response(orig_response, dbsession=scoped_session(sessionmaker(bind=en
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>
 <div class="gcse-search" style="height: 70px"
 data-as_oq="site:chiefsan.github.io inurl:github.com/chiefsan/deCiPher"
-data-gaCategoryParameter="decipher.framework.api_utils">
+data-gaCategoryParameter="decipher.scripts.scrap_codeforces_problemset">
 </div>
 <h1>Index</h1>
 <div class="toc">
@@ -124,13 +118,12 @@ data-gaCategoryParameter="decipher.framework.api_utils">
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="decipher.framework" href="index.html">decipher.framework</a></code></li>
+<li><code><a title="decipher.scripts" href="index.html">decipher.scripts</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="decipher.framework.api_utils.create_response" href="#decipher.framework.api_utils.create_response">create_response</a></code></li>
-<li><code><a title="decipher.framework.api_utils.remove_db_session" href="#decipher.framework.api_utils.remove_db_session">remove_db_session</a></code></li>
+<li><code><a title="decipher.scripts.scrap_codeforces_problemset.main" href="#decipher.scripts.scrap_codeforces_problemset.main">main</a></code></li>
 </ul>
 </li>
 </ul>

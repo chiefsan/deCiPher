@@ -27,7 +27,7 @@
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L0-L63" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L0-L63" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">import scrapy
 from ..items import CodeforcesProblemItem
@@ -114,7 +114,7 @@ class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L5-L64" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L5-L64" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">class CodeforcesProblemSpider(scrapy.Spider):
     name = &#34;problemset_spider&#34;
@@ -207,7 +207,7 @@ class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L10-L30" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L10-L30" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">def parse(self, response):
     for problem_href in response.selector.xpath(&#39;//td[@class=&#34;id&#34;]/a/@href&#39;):
@@ -240,7 +240,7 @@ class.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
-<a href="https://github.com/chiefsan/deCiPher/blob/c4ddeace7d1cdb139754478aa0e9415b06e073b4/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L32-L64" class="git-link">Browse git</a>
+<a href="https://github.com/chiefsan/deCiPher/blob/fb431ca00cb43e3e03ea0324f902d4f7ab8bbdc7/decipher/codeforces_scraper/codeforces_scraper/spiders/problemset_spider.py#L32-L64" class="git-link">Browse git</a>
 </summary>
 <pre><code class="python">def parse_problem_contents(self, response):
     item = CodeforcesProblemItem()
@@ -284,7 +284,7 @@ class.</p></div>
 </article>
 <nav id="sidebar">
 <header>
-<a class="homelink" rel="home" title="pdoc Home" href="https://chiefsan.github.io/deCiPher/">
+<a class="homelink" rel="home" title="deCiPher Home" href="https://chiefsan.github.io/deCiPher/">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Searchtool.svg" alt=""> deCiPher
 </a>
 </header>
