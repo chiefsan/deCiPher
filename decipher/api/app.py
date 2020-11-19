@@ -46,10 +46,16 @@ def welcome():
     """
     Return home page.
     """
-    if google.authorized:
-        return render_template("index_logged_in.html", email=resp.json()["email"])
-    else:
-        return render_template("index.html")
+    # if google.authorized:
+    #     return render_template("index_logged_in.html", email=resp.json()["email"])
+    # else:
+    #     return render_template("index.html")
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v1/userinfo")
+    assert resp.ok, resp.text
+    return render_template("index_logged_in.html", email=resp.json()["email"])
+
 
 
 @blueprint.route("/api/search/<query>", defaults={"max_num_results": 5})
@@ -71,13 +77,13 @@ def api_search(
         return render_template("default.html", problems=result_problems)
 
 
-@blueprint.route("/")
-def index():
-    if not google.authorized:
-        return redirect(url_for("google.login"))
-    resp = google.get("/oauth2/v1/userinfo")
-    assert resp.ok, resp.text
-    return render_template("index_logged_in.html", email=resp.json()["email"])
+# @blueprint.route("/")
+# def index():
+#     if not google.authorized:
+#         return redirect(url_for("google.login"))
+#     resp = google.get("/oauth2/v1/userinfo")
+#     assert resp.ok, resp.text
+#     return render_template("index_logged_in.html", email=resp.json()["email"])
 
 
 
