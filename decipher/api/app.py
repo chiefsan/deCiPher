@@ -71,7 +71,7 @@ def api_search(
         return render_template("default.html", problems=result_problems)
 
 
-@blueprint.route("/login")
+@blueprint.route("/")
 def index():
     if not google.authorized:
         return redirect(url_for("google.login"))
