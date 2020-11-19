@@ -11,6 +11,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from decipher.framework.schema import engine, Problem
 from sqlalchemy import inspect
 from flask import render_template
+from flask_login import logout_user
+from flask import current_app
 
 import os
 
@@ -85,7 +87,17 @@ def index():
     assert resp.ok, resp.text
     return render_template("index_logged_in.html", email=resp.json()["email"])
 
-
+@blueprint.route("/logout")
+def logout():
+    token = current_app.blueprints["google"].token["access_token"]
+    resp = google.post(
+        "https://accounts.google.com/o/oauth2/revoke",
+        params={"token": token},
+        headers={"Content-Type": "application/x-www-form-urlencoded"}
+    )
+    assert resp.ok, resp.text
+    del current_app.blueprints["google"].token  # Delete OAuth token from storage
+    return render_template("index.html")
 
 def create_app(name=__name__):
     """
