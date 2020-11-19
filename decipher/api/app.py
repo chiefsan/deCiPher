@@ -51,7 +51,7 @@ def welcome():
     # else:
     #     return render_template("index.html")
     if not google.authorized:
-        return redirect(url_for("google.login"))
+        return render_template("index.html")
     resp = google.get("/oauth2/v1/userinfo")
     assert resp.ok, resp.text
     return render_template("index_logged_in.html", email=resp.json()["email"])
@@ -77,13 +77,13 @@ def api_search(
         return render_template("default.html", problems=result_problems)
 
 
-# @blueprint.route("/")
-# def index():
-#     if not google.authorized:
-#         return redirect(url_for("google.login"))
-#     resp = google.get("/oauth2/v1/userinfo")
-#     assert resp.ok, resp.text
-#     return render_template("index_logged_in.html", email=resp.json()["email"])
+@blueprint.route("/login")
+def index():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v1/userinfo")
+    assert resp.ok, resp.text
+    return render_template("index_logged_in.html", email=resp.json()["email"])
 
 
 
@@ -96,7 +96,12 @@ def create_app(name=__name__):
     app.secret_key = "blah"
     app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
     app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-    google_bp = make_google_blueprint(scope=["profile", "email"])
+    google_bp = make_google_blueprint(    scope=[
+        "openid",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile",
+    ],
+)
     app.register_blueprint(google_bp, url_prefix="/login")
     CORS(app, supports_credentials=True)
     app.register_blueprint(blueprint)
