@@ -12,3 +12,4 @@ beautifulsoup4==4.9.3
 gunicorn
 Flask-Session
 psycopg2-binary
+flask-dance

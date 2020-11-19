@@ -1,6 +1,7 @@
 from uuid import uuid4
 
-from flask import Blueprint, Flask, session, request, jsonify
+from flask_dance.contrib.google import make_google_blueprint, google
+from flask import Blueprint, Flask, session, request, jsonify, redirect, url_for
 from flask_cors import CORS
 from flask_session import Session
 from decipher.api.exceptions import ApiException
@@ -11,6 +12,7 @@ from decipher.framework.schema import engine, Problem
 from sqlalchemy import inspect
 from flask import render_template
 
+import os
 
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
@@ -44,7 +46,10 @@ def welcome():
     """
     Return home page.
     """
-    return render_template("index.html")
+    if google.authorized:
+        return render_template("index_logged_in.html", email=resp.json()["email"])
+    else:
+        return render_template("index.html")
 
 
 @blueprint.route("/api/search/<query>", defaults={"max_num_results": 5})
@@ -60,7 +65,20 @@ def api_search(
         session.query(Problem).filter(Problem.problem_id.in_(tuple(result))).all()
     )
     result_problems = list(map(object_as_dict, result_problems))
-    return render_template("default.html", problems=result_problems)
+    if google.authorized:
+        return render_template("default_logged_in.html", email=resp.json()["email"], problems=result_problems)
+    else:
+        return render_template("default.html", problems=result_problems)
+
+
+@blueprint.route("/login")
+def index():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v1/userinfo")
+    assert resp.ok, resp.text
+    return render_template("index_logged_in.html", email=resp.json()["email"])
+
 
 
 def create_app(name=__name__):
@@ -70,6 +88,10 @@ def create_app(name=__name__):
     app = Flask(name)
     app.config["SESSION_TYPE"] = "filesystem"
     app.secret_key = "blah"
+    app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+    app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+    google_bp = make_google_blueprint(scope=["profile", "email"])
+    app.register_blueprint(google_bp, url_prefix="/login")
     CORS(app, supports_credentials=True)
     app.register_blueprint(blueprint)
     Session(app)
