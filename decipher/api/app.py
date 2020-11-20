@@ -192,6 +192,6 @@ if __name__ == "__main__":
     api = Api()
     api.add_resource(commentList, '/comments')
     api.add_resource(comment, '/comments/<comment_id>')
-    api.init_app(blueprint)
     app = create_app()
+    api.init_app(blueprint)
     app.run(host="127.0.0.1", port=5002, debug=True)
