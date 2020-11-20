@@ -13,3 +13,4 @@ gunicorn
 Flask-Session
 psycopg2-binary
 flask-dance
+flask-restful
