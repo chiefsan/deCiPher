@@ -100,34 +100,6 @@ def logout():
     del current_app.blueprints["google"].token  # Delete OAuth token from storage
     return render_template("index.html")
 
-def create_app(name=__name__):
-    """
-    Create a Flask app.
-    """
-    app = Flask(name)
-    app.config["SESSION_TYPE"] = "filesystem"
-    app.secret_key = "blah"
-    app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-    app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-    google_bp = make_google_blueprint(    scope=[
-        "openid",
-        "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.googleapis.com/auth/userinfo.profile",
-    ],
-)
-    app.register_blueprint(google_bp, url_prefix="/login")
-    CORS(app, supports_credentials=True)
-    app.register_blueprint(blueprint)
-    Session(app)
-    return app
-
-
-COMMENTS = {
-    'comment1': {'task': 'wuuuuuuuuuuuuuuuuuuut. this is soooooooooooooooooo averaaaaaaaaaaaaaaaage'},
-    'comment2': {'task': 'meeeeeeeeeeeeeeeh. this is sooooooo baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad'},
-    'comment3': {'task': 'wooooooooooooooooooooooooooooooooooow. this is aweeeeeeeeesomeeeeeeeeeeeeeeeeeeeee!'},
-}
-
 
 def abort_if_comment_doesnt_exist(comment_id):
     if comment_id not in COMMENTS:
@@ -185,6 +157,35 @@ def render_comments():
         return render_template("comments_logged_in.html", email=resp.json()["email"], comments=out)
     else:
         return render_template("comments.html", comments=out)
+
+
+def create_app(name=__name__):
+    """
+    Create a Flask app.
+    """
+    app = Flask(name)
+    app.config["SESSION_TYPE"] = "filesystem"
+    app.secret_key = "blah"
+    app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+    app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+    google_bp = make_google_blueprint(    scope=[
+        "openid",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile",
+    ],
+)
+    app.register_blueprint(google_bp, url_prefix="/login")
+    CORS(app, supports_credentials=True)
+    app.register_blueprint(blueprint)
+    Session(app)
+    return app
+
+
+COMMENTS = {
+    'comment1': {'task': 'wuuuuuuuuuuuuuuuuuuut. this is soooooooooooooooooo averaaaaaaaaaaaaaaaage'},
+    'comment2': {'task': 'meeeeeeeeeeeeeeeh. this is sooooooo baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad'},
+    'comment3': {'task': 'wooooooooooooooooooooooooooooooooooow. this is aweeeeeeeeesomeeeeeeeeeeeeeeeeeeeee!'},
+}
 
 
 if __name__ == "__main__":
