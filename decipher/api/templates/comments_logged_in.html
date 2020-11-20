@@ -1,0 +1,226 @@
+<!doctype html>
+
+<head>
+
+    <!-- Meta -->
+    <meta charset="utf-8">
+
+    <title>deCiPher</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google-site-verification" content="Ay-WUSORPTgCl8Y6OguHS0aBmNB5yeQXDVBPDfsZlhg" />
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://chiefsan.github.io/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://chiefsan.github.io/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://chiefsan.github.io/img/favicon-16x16.png">
+    <link rel="manifest" href="https://chiefsan.github.io/img/site.webmanifest">
+
+    <!-- Fonts -->
+    <link
+        href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700|Merriweather:400,300,300italic,400italic,700'
+        rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://chiefsan.github.io//css/animate.min.css">
+    <link rel="stylesheet" href="https://chiefsan.github.io//css/style.css">
+
+    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <title>Sanjay Seetharaman | My personal homepage</title>
+    <meta name="generator" content="Jekyll v3.9.0" />
+    <meta property="og:title" content="Sanjay Seetharaman" />
+    <meta name="author" content="Sanjay Seetharaman" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="My personal homepage" />
+    <meta property="og:description" content="My personal homepage" />
+    <link rel="canonical" href="https://chiefsan.github.io/" />
+    <meta property="og:url" content="https://chiefsan.github.io/" />
+    <meta property="og:site_name" content="Sanjay Seetharaman" />
+    <script type="application/ld+json">
+{"description":"My personal homepage","headline":"Sanjay Seetharaman","@type":"WebSite","url":"https://chiefsan.github.io/","name":"Sanjay Seetharaman","author":{"@type":"Person","name":"Sanjay Seetharaman"},"@context":"https://schema.org"}</script>
+    <!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="">
+
+    <div class="main container" id="top">
+
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">{{ email }}</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li>
+                            <a href="https://chiefsan.github.io/">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="https://chiefsan.github.io/cv">CV</a>
+                        </li>
+
+                        <li>
+                            <a href="https://chiefsan.github.io/collection/misc">Misc</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="hero-container">
+
+                        <div class="hero-content">
+
+
+                            <h1 class="text-center">deCiPher</h1>
+
+
+
+                            <p class="text-center">
+
+                                Decipher programming problems
+
+
+
+                            </p>
+
+
+                            <div class="hero-buttons">
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <form action="/comments" method="POST" target="dummyframe">
+                                    <input type="text" name="task" id="text" placeholder="Add your comment here." />
+                                    <button type="button" id="btn" value="Submit" onClick="javascript: window.location.href = 'https://decipher-frontend.herokuapp.com/api/commentspage'">
+    <i class=" fa fa-arrow-circle-right fa-lg"></i> Submit</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="break"></div>
+
+                    <h2 class="section-title text-center">Results</h2>
+
+
+                    <div class="break"></div>
+
+                    {% for comment in comments %}
+
+                    <div class="wow fadeIn">
+
+                        <div class="content-wrap">
+
+                            <div class="row">
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="content">
+                                        <h3 class="title">{{ comment[0] }}</h3>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="content">
+                                        {{ comment[2] }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-2 col-md-offset-1">
+                        <p class="text-muted text-left "><a href="https://chiefsan.github.io">© 2020 Sanjay
+                                Seetharaman</a></p>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 col-md-offset-2">
+                        <a class="section-jump" href="#top">
+                            <i class="fa fa-angle-up fa-3x"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://chiefsan.github.io/js/wow.min.js"></script>
+    <script src="https://chiefsan.github.io/js/app.js"></script>
+    <script type="text/javascript" src="https://chiefsan.github.io/assets/js/main.js"></script>
+    <script>
+        var input = document.getElementById("text");
+        input.addEventListener("keyup", function (event) {
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                document.getElementById("btn").click();
+            }
+        });
+    </script>
+</body>
+
+</html>

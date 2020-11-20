@@ -12,6 +12,8 @@ from decipher.framework.schema import engine, Problem
 from sqlalchemy import inspect
 from flask import render_template
 from flask import current_app
+from flask_restful import reqparse, abort, Api, Resource
+
 
 import os
 import json
@@ -120,6 +122,74 @@ def create_app(name=__name__):
     return app
 
 
+COMMENTS = {
+    'comment1': {'task': 'wuuuuuuuuuuuuuuuuuuut. this is soooooooooooooooooo averaaaaaaaaaaaaaaaage'},
+    'comment2': {'task': 'meeeeeeeeeeeeeeeh. this is sooooooo baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad'},
+    'comment3': {'task': 'wooooooooooooooooooooooooooooooooooow. this is aweeeeeeeeesomeeeeeeeeeeeeeeeeeeeee!'},
+}
+
+
+def abort_if_comment_doesnt_exist(comment_id):
+    if comment_id not in COMMENTS:
+        abort(404, message="comment {} doesn't exist".format(comment_id))
+
+parser = reqparse.RequestParser()
+parser.add_argument('task')
+
+
+# comment
+# shows a single comment item and lets you delete a comment item
+class comment(Resource):
+    def get(self, comment_id):
+        abort_if_comment_doesnt_exist(comment_id)
+        return COMMENTS[comment_id]
+
+    def delete(self, comment_id):
+        abort_if_comment_doesnt_exist(comment_id)
+        del COMMENTS[comment_id]
+        return '', 204
+
+    def put(self, comment_id):
+        args = parser.parse_args()
+        task = {'task': args['task']}
+        COMMENTS[comment_id] = task
+        return task, 201
+
+
+# commentList
+# shows a list of all comments, and lets you POST to add new comments
+class commentList(Resource):
+    def get(self):
+        return COMMENTS
+
+    def post(self):
+        args = parser.parse_args()
+        comment_id = int(max(COMMENTS.keys()).lstrip('comment')) + 1
+        comment_id = 'comment%i' % comment_id
+        COMMENTS[comment_id] = {'task': args['task']}
+        return COMMENTS[comment_id], 201
+
+@blueprint.route("/api/commentspage")
+def render_comments():
+    out = []
+    for comment in COMMENTS:
+        temp = []
+        temp.append(comment)
+        temp.append(list(COMMENTS[comment].keys())[0])
+        temp.append(list(COMMENTS[comment].values())[0])
+        out.append(temp)
+    out = out[::-1]
+    if google.authorized:
+        resp = google.get("/oauth2/v1/userinfo")
+        assert resp.ok, resp.text
+        return render_template("comments_logged_in.html", email=resp.json()["email"], comments=out)
+    else:
+        return render_template("comments.html", comments=out)
+
+
 if __name__ == "__main__":
     app = create_app()
+    api = Api(app)
+    api.add_resource(commentList, '/comments')
+    api.add_resource(comment, '/comments/<comment_id>')
     app.run(host="127.0.0.1", port=5002, debug=True)
