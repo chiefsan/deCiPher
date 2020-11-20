@@ -72,6 +72,12 @@ def api_search(
     )
     result_problems = list(map(object_as_dict, result_problems))
     if google.authorized:
+        resp = google.post(
+        "https://accounts.google.com/o/oauth2/revoke",
+        params={"token": token},
+        headers={"Content-Type": "application/x-www-form-urlencoded"}
+        )
+        assert resp.ok, resp.text
         return render_template("default_logged_in.html", email=resp.json()["email"], problems=result_problems)
     else:
         return render_template("default.html", problems=result_problems)
