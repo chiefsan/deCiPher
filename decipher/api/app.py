@@ -18,6 +18,39 @@ from flask_restful import reqparse, abort, Api, Resource
 import os
 import json
 
+# comment
+# shows a single comment item and lets you delete a comment item
+class comment(Resource):
+    def get(self, comment_id):
+        abort_if_comment_doesnt_exist(comment_id)
+        return COMMENTS[comment_id]
+
+    def delete(self, comment_id):
+        abort_if_comment_doesnt_exist(comment_id)
+        del COMMENTS[comment_id]
+        return '', 204
+
+    def put(self, comment_id):
+        args = parser.parse_args()
+        task = {'task': args['task']}
+        COMMENTS[comment_id] = task
+        return task, 201
+
+
+# commentList
+# shows a list of all comments, and lets you POST to add new comments
+class commentList(Resource):
+    def get(self):
+        return COMMENTS
+
+    def post(self):
+        args = parser.parse_args()
+        comment_id = int(max(COMMENTS.keys()).lstrip('comment')) + 1
+        comment_id = 'comment%i' % comment_id
+        COMMENTS[comment_id] = {'task': args['task']}
+        return COMMENTS[comment_id], 201
+
+
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
 
@@ -25,7 +58,10 @@ def object_as_dict(obj):
 # so that we can also make a test app
 
 blueprint = Blueprint("decipher", __name__)
-
+api = Api()
+api.add_resource(commentList, '/comments')
+api.add_resource(comment, '/comments/<comment_id>')
+api.init_app(blueprint)
 
 @blueprint.errorhandler(ApiException)
 def handle_exception(error):
@@ -109,37 +145,6 @@ parser = reqparse.RequestParser()
 parser.add_argument('task')
 
 
-# comment
-# shows a single comment item and lets you delete a comment item
-class comment(Resource):
-    def get(self, comment_id):
-        abort_if_comment_doesnt_exist(comment_id)
-        return COMMENTS[comment_id]
-
-    def delete(self, comment_id):
-        abort_if_comment_doesnt_exist(comment_id)
-        del COMMENTS[comment_id]
-        return '', 204
-
-    def put(self, comment_id):
-        args = parser.parse_args()
-        task = {'task': args['task']}
-        COMMENTS[comment_id] = task
-        return task, 201
-
-
-# commentList
-# shows a list of all comments, and lets you POST to add new comments
-class commentList(Resource):
-    def get(self):
-        return COMMENTS
-
-    def post(self):
-        args = parser.parse_args()
-        comment_id = int(max(COMMENTS.keys()).lstrip('comment')) + 1
-        comment_id = 'comment%i' % comment_id
-        COMMENTS[comment_id] = {'task': args['task']}
-        return COMMENTS[comment_id], 201
 
 @blueprint.route("/api/commentspage")
 def render_comments():
@@ -189,9 +194,5 @@ COMMENTS = {
 
 
 if __name__ == "__main__":
-    api = Api()
-    api.add_resource(commentList, '/comments')
-    api.add_resource(comment, '/comments/<comment_id>')
     app = create_app()
-    api.init_app(app)
     app.run(host="127.0.0.1", port=5002, debug=True)
