@@ -11,7 +11,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from decipher.framework.schema import engine, Problem
 from sqlalchemy import inspect
 from flask import render_template
-from flask_login import logout_user
 from flask import current_app
 
 import os
