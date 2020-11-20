@@ -15,12 +15,10 @@ from flask_login import logout_user
 from flask import current_app
 
 import os
+import json
 
 def object_as_dict(obj):
     return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
-
-
-import json
 
 # Use a flask blueprint rather than creating the app directly
 # so that we can also make a test app
